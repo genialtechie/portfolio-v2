@@ -1,53 +1,84 @@
-import React from 'react';
+import React, { useState, forwardRef } from 'react';
 import FeaturedProject from './FeaturedProject';
-import MusicKeyboard from '../images/music-events.PNG';
-import ExpenseTracker from '../images/expense-tracker.PNG';
+import ProjectCard from './ProjectCard';
+import { FEATURED, PROJECTS } from './Projects';
+import Fade from 'react-reveal/Fade';
 
-const FEATURED = [
-  {
-    title: 'Music Keyboard',
-    desc: "This is a javascript app I built for Wes Bos' 30 days of code challenge. It plays drum sounds and does a little animation depending on the pressed key.",
-    image: MusicKeyboard,
-    tools: ['HTML', 'CSS', 'VanillaJS'],
-    github: 'https://github.com/genialtechie/javascript-music-events',
-    preview:
-      'https://632776409c51cc731cf771ce--effortless-cocada-cb301b.netlify.app/',
-    right: true,
-  },
-  {
-    title: 'Expense Tracker',
-    desc: ' I built this budget app to get familiar with the basics of react. I learnt how to manipulate state, props & I utilized several react hooks like useEffect, and a custom localStorage hook.',
-    image: ExpenseTracker,
-    tools: ['React', 'Tailwind', 'Netlify'],
-    github: 'https://github.com/genialtechie/expense-tracker',
-    preview:
-      'https://62c8e0312db9040f98a8490c--bespoke-medovik-287ab6.netlify.app/',
-    right: false,
-  },
-];
-const MyWork = () => {
+const MyWork = forwardRef((props, ref) => {
+  const [showBtn, setShowBtn] = useState({
+    projects: PROJECTS,
+    itemsToShow: 4,
+    expanded: false,
+  });
+
+  function handleClick(e) {
+    e.preventDefault();
+    showBtn.itemsToShow === 4
+      ? setShowBtn({
+          projects: showBtn.projects,
+          itemsToShow: showBtn.projects.length,
+          expanded: true,
+        })
+      : setShowBtn({
+          projects: showBtn.projects,
+          itemsToShow: 4,
+          expanded: false,
+        });
+  }
+
   return (
     <div
+      ref={ref}
       id="my-work"
-      className="mt-6 px-7 w-full md:mx-auto md:w-2/3 flex flex-col"
+      className="page mb-28 mt-6 px-7 w-full md:mx-auto md:w-3/4 flex flex-col"
     >
-      <h2 className="text-3xl pt-6 mb-6">Explore my projects</h2>
-      <div>
-        {FEATURED.map((project) => (
-          <FeaturedProject
-            key={project.title}
-            title={project.title}
-            desc={project.desc}
-            image={project.image}
-            tools={project.tools}
-            github={project.github}
-            preview={project.preview}
-            right={project.right}
-          />
-        ))}
+      <h2 className="text-3xl mt-12 pt-14 mb-6">Explore my projects</h2>
+      <Fade
+        bottom
+        cascade
+      >
+        <div className=" md:block">
+          {FEATURED.map((project) => (
+            <FeaturedProject
+              key={project.title}
+              title={project.title}
+              desc={project.desc}
+              image={project.image}
+              tools={project.tools}
+              github={project.github}
+              preview={project.preview}
+              right={project.right}
+            />
+          ))}
+        </div>
+      </Fade>
+
+      <div className="mt-3 flex flex-col">
+        <h2 className=" md:block text-3xl pt-6 mb-6">
+          Other interesting works...
+        </h2>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {showBtn.projects.slice(0, showBtn.itemsToShow).map((card) => (
+            <ProjectCard
+              key={card.title}
+              title={card.title}
+              desc={card.desc}
+              github={card.github}
+              tools={card.tools}
+            />
+          ))}
+        </div>
+        <button
+          className="font-mono p-4 w-fit mt-4 self-center gradient-btn"
+          onClick={handleClick}
+        >
+          {showBtn.expanded ? 'See less ...' : 'See More ...'}
+        </button>
       </div>
     </div>
   );
-};
+});
+
+MyWork.displayName = 'MyWork';
 
 export default MyWork;

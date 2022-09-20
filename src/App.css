@@ -1,11 +1,10 @@
-.App,
-.page {
+.App {
   background-color: #121212;
-  height: 100%;
+  height: 100vh;
 }
 
 .page-nav {
-  background-color: #181818;
+  background-color: #202020;
 }
 
 .gradient-text {

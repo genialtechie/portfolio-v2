@@ -1,10 +1,13 @@
 import React from 'react';
 
-const Homepage = () => {
+const Homepage = ({ reference }) => {
+  function handleClick() {
+    reference.current?.scrollIntoView({ behavior: 'smooth' });
+  }
   return (
     <div
       id="about"
-      className="px-7 w-full md:mx-auto md:w-2/3 mt-20 md:mt-28 2xl:mt-40 flex flex-col mb-24"
+      className="px-7 w-full md:mx-auto md:w-2/3 pt-20 md:pt-28 2xl:pt-40 flex flex-col mb-32"
     >
       <div className="mb-6 font-mono text-lg">Hi, my name is</div>
       <div className="mb-6 text-3xl md:text-6xl">Haleem Bello.</div>
@@ -15,7 +18,10 @@ const Homepage = () => {
         I’m a software engineer specializing in building (and occasionally
         designing) exceptional digital experiences.
       </p>
-      <button className="font-mono p-4 w-fit self-center md:self-auto gradient-btn">
+      <button
+        onClick={handleClick}
+        className="font-mono p-4 w-fit self-center md:self-auto gradient-btn"
+      >
         Check out my work!
       </button>
     </div>
