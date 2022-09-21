@@ -7,7 +7,7 @@ const Homepage = ({ reference }) => {
   return (
     <div
       id="about"
-      className="px-7 w-full md:mx-auto md:w-2/3 pt-20 md:pt-28 2xl:pt-40 flex flex-col mb-32"
+      className="px-7 w-full md:mx-auto md:w-2/3 pt-28 2xl:pt-40 flex flex-col mb-32"
     >
       <div className="mb-6 font-mono text-lg">Hi, my name is</div>
       <div className="mb-6 text-3xl md:text-6xl">Haleem Bello.</div>
